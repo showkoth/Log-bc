@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="/static/images/favicon.png" type="image/png">
+
+  <title>Multichain</title>
+
+  <link rel="stylesheet" href="/static/css/style.default.css" />
+
+  <link rel="stylesheet" href="/static/css/bootstrap-fileupload.min.css" />
+  <link rel="stylesheet" href="/static/css/bootstrap-timepicker.min.css" />
+  <link rel="stylesheet" href="/static/css/jquery.tagsinput.css" />
+  <link rel="stylesheet" href="/static/css/colorpicker.css" />
+  <link rel="stylesheet" href="/static/css/dropzone.css" />
+
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="/static/js/html5shiv.js"></script>
+  <script src="/static/js/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+
+<body>
+
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+</div>
+
+  <div class="leftpanel">
+
+    <div class="logopanel">
+        <h1><span>[</span> Multichain Web <span>]</span></h1>
+    </div><!-- logopanel -->
+
+    <div class="leftpanelinner">
+
+
+
+      <h5 class="sidebartitle">Navigation</h5>
+          <ul class="nav nav-pills nav-stacked nav-bracket">
+            <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-home"></i> <span>Node</span></a>
+             <ul class="children" style="display: block;">
+                 <li class="active"><a href="info.html"><i class="fa fa-caret-right"></i>Info </a></li>
+                <li><a href="connect.html"><i class="fa fa-caret-right"></i>Connect</a></li>
+             </ul>
+            </li>
+
+            <li><a href="permissions.html"><i class="fa fa-envelope-o"></i> <span>Permissions </span></a></li>
+            <li><a href="view-streams.html"><i class="fa fa-envelope-o"></i> <span>View Streams </span></a></li>
+
+            <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-edit"></i> <span>Public Stream</span></a>
+             <ul class="children" style="display: block;">
+                 <li class="active"><a href="create-stream.html"><i class="fa fa-caret-right"></i>Create </a></li>
+                <li><a href="publish.html"><i class="fa fa-caret-right"></i>Publish</a></li>
+                 <li><a href="subscribe.html"><i class="fa fa-caret-right"></i>Subscribe</a></li>
+             </ul>
+            </li>
+
+              <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-edit"></i> <span>Confidential Stream</span></a>
+                 <ul class="children" style="display: block;">
+                    <li class="active"><a href="generate.html"><i class="fa fa-caret-right"></i>Generate Key</a></li>
+                    <li><a href="publish-con.html"><i class="fa fa-caret-right"></i>Publish </a></li>
+                    <li><a href="view-con.html"><i class="fa fa-caret-right"></i>View File</a></li>
+                </ul>
+            </li>
+
+           <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-laptop"></i> <span>Audit</span></a>
+             <ul class="children" style="display: block;">
+                 <li class="a"><a href="audit-by-date.html"><i class="fa fa-caret-right"></i>By date </a></li>
+                <li><a href="audit-by-txid.html"><i class="fa fa-caret-right"></i>By Txid</a></li>
+             </ul>
+            </li>
+
+               <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-laptop"></i> <span>Remote Audit</span></a>
+             <ul class="children" style="display: block;">
+                 <li class="a"><a href="remote-audit-by-date.html"><i class="fa fa-caret-right"></i>By date </a></li>
+                <li><a href="remote-audit-by-txid.html"><i class="fa fa-caret-right"></i>By Txid</a></li>
+             </ul>
+            </li>
+
+               <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-laptop"></i> <span>Retrieve</span></a>
+             <ul class="children" style="display: block;">
+                 <li class="a"><a href="retrieve-by-date.html"><i class="fa fa-caret-right"></i>By date </a></li>
+                 <li><a href="retrieve-by-stream.html"><i class="fa fa-caret-right"></i>By Stream</a></li>
+                <li><a href="retrieve-by-txid.html"><i class="fa fa-caret-right"></i>By Txid</a></li>
+             </ul>
+            </li>
+          </ul>
+
+
+
+    </div><!-- leftpanelinner -->
+  </div><!-- leftpanel -->
+
+  <div class="mainpanel">
+
+    <div class="headerbar">
+
+      <a class="menutoggle"><i class="fa fa-bars"></i></a>
+
+
+
+    </div><!-- headerbar -->
+
+      <div class="contentpanel">
+
+      <div class="panel panel-default">
+
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">Stream Information</h4>
+            </div>
+
+              <div class="contentpanel">
+                <div class="col-md-6">
+          <h5 class="subtitle mb5">Subscribed Streams</h5>
+
+          <div class="table-responsive">
+
+              {% for stream in list_streams %}
+                  {% if stream['subscribed'] %}
+{#                      <form action = "http://localhost:5000/create-stream" method="post">#}
+                      <table class="table table-striped mb30" >
+                          <tr>
+                              <td> <b> Name</b></td>
+{#                              <input type="hidden" name="name" value={{ stream['name'] }}/>#}
+{#                                <button type="submit"></button>#}
+                              <td>
+                                   <a name ="stream-name" href="stream-details.html">{{ stream['name'] }}</a>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td> <b> Created by</b></td>
+                              <td>{{ stream['creators'][0] }}</td>
+                          </tr>
+                          <tr>
+                              <td> <b> Items </b></td>
+                              <td>{{ stream['items'] }}</td>
+                          </tr>
+                          <tr>
+                              <td> <b> Publishers</b></td>
+                              <td>{{ stream['publishers'] }}</td>
+                          </tr>
+                        </table>
+{#                      </form>#}
+                  {% endif %}
+          {% endfor %}
+          </div><!-- table-responsive -->
+
+
+          <div class="col-md-6">
+          <h5 class="subtitle mb5">Unsubscribed Streams</h5>
+          <div class="table-responsive">
+              {% for stream in list_streams %}
+                  {% if not stream['subscribed'] %}
+                      <table class="table table-striped mb30">
+                          <tr>
+                              <td> <b> Name</b></td>
+                              <td>{{ stream['name'] }}</td>
+                          </tr>
+                          <tr>
+                              <td> <b> Created by</b></td>
+                              <td>{{ stream['creators'][0] }}</td>
+                          </tr>
+                        </table>
+                  {% endif %}
+
+          {% endfor %}
+          </div><!-- table-responsive -->
+        </div><!-- col-md-6 -->
+
+
+        </div><!-- col-md-6 -->
+
+
+
+       <div class="col-md-6">
+{#          <h5 class="subtitle mb5">My Addresses</h5>#}
+{#          <div class="table-responsive">#}
+{#          {% for address in addresses %}#}
+{#              <table class="table table-striped mb30">#}
+{#                    <tr>#}
+{#                        <td><b>Address</b></td>#}
+{#                                <td>{{ address }}</td>#}
+{#                    </tr>#}
+{#                    <tr>#}
+{#                        <td><b>Permissions</b></td>#}
+{#                        <td>{{ permissions[address] }}</td>#}
+{#                    </tr>#}
+{##}
+{#              </table>#}
+{##}
+{#          {% endfor %}#}
+{##}
+{#          </div><!-- table-responsive -->#}
+        </div><!-- col-md-6 -->
+
+      </div><!-- row -->
+
+ <div class="contentpanel">
+
+
+
+      </div><!-- row -->
+
+      </div><!-- row -->
+
+
+
+        </div><!-- panel-body -->
+
+
+
+
+      </div><!-- panel -->
+
+
+
+        </div><!-- tab-pane -->
+
+</div>
+
+</div>
+
+
+
+
+
+<script src="/static/js/jquery-1.10.2.min.js"></script>
+<script src="/static/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/static/js/jquery-ui-1.10.3.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/modernizr.min.js"></script>
+<script src="/static/js/jquery.sparkline.min.js"></script>
+<script src="/static/js/toggles.min.js"></script>
+<script src="/static/js/retina.min.js"></script>
+<script src="/static/js/jquery.cookies.js"></script>
+
+<script src="/static/js/jquery.autogrow-textarea.js"></script>
+<script src="/static/js/bootstrap-fileupload.min.js"></script>
+<script src="/static/js/bootstrap-timepicker.min.js"></script>
+<script src="/static/js/jquery.maskedinput.min.js"></script>
+<script src="/static/js/jquery.tagsinput.min.js"></script>
+<script src="/static/js/jquery.mousewheel.js"></script>
+<script src="/static/js/chosen.jquery.min.js"></script>
+<script src="/static/js/dropzone.min.js"></script>
+<script src="/static/js/colorpicker.js"></script>
+
+
+<script src="/static/js/custom.js"></script>
+
+<script>
+jQuery(document).ready(function(){
+
+  // Chosen Select
+  jQuery(".chosen-select").chosen({'width':'100%','white-space':'nowrap'});
+
+  // Tags Input
+  jQuery('#tags').tagsInput({width:'auto'});
+
+  // Textarea Autogrow
+  jQuery('#autoResizeTA').autogrow();
+
+  // Color Picker
+  if(jQuery('#colorpicker').length > 0) {
+	 jQuery('#colorSelector').ColorPicker({
+			onShow: function (colpkr) {
+				jQuery(colpkr).fadeIn(500);
+				return false;
+			},
+			onHide: function (colpkr) {
+				jQuery(colpkr).fadeOut(500);
+				return false;
+			},
+			onChange: function (hsb, hex, rgb) {
+				jQuery('#colorSelector span').css('backgroundColor', '#' + hex);
+				jQuery('#colorpicker').val('#'+hex);
+			}
+	 });
+  }
+
+  // Color Picker Flat Mode
+	jQuery('#colorpickerholder').ColorPicker({
+		flat: true,
+		onChange: function (hsb, hex, rgb) {
+			jQuery('#colorpicker3').val('#'+hex);
+		}
+	});
+
+  // Date Picker
+  jQuery('#datepicker').datepicker();
+
+  jQuery('#datepicker-inline').datepicker();
+
+  jQuery('#datepicker-multiple').datepicker({
+    numberOfMonths: 3,
+    showButtonPanel: true
+  });
+
+  // Spinner
+  var spinner = jQuery('#spinner').spinner();
+  spinner.spinner('value', 0);
+
+  // Input Masks
+  jQuery("#date").mask("99/99/9999");
+  jQuery("#phone").mask("(999) 999-9999");
+  jQuery("#ssn").mask("999-99-9999");
+
+  // Time Picker
+  jQuery('#timepicker').timepicker({defaultTIme: false});
+  jQuery('#timepicker2').timepicker({showMeridian: false});
+  jQuery('#timepicker3').timepicker({minuteStep: 15});
+
+
+    });
+    </script>
+  </div>
+</body>
+
+</html>

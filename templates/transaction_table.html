@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="/static/images/favicon.png" type="image/png">
+
+  <title>Multichain Web</title>
+
+  <link href="/static/css/style.default.css" rel="stylesheet">
+  <link href="/static/css/jquery.datatables.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="/static/js/html5shiv.js"></script>
+  <script src="/static/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+</div>
+
+  <div class="leftpanel">
+
+    <div class="logopanel">
+        <h1><span>[</span> Multichain Web <span>]</span></h1>
+    </div><!-- logopanel -->
+
+    <div class="leftpanelinner">
+
+
+
+      <h5 class="sidebartitle">Navigation</h5>
+          <ul class="nav nav-pills nav-stacked nav-bracket">
+            <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-home"></i> <span>Node</span></a>
+             <ul class="children" style="display: block;">
+                 <li class="active"><a href="info.html"><i class="fa fa-caret-right"></i>Info </a></li>
+                <li><a href="connect.html"><i class="fa fa-caret-right"></i>Connect</a></li>
+             </ul>
+            </li>
+
+            <li><a href="permissions.html"><i class="fa fa-envelope-o"></i> <span>Permissions </span></a></li>
+            <li><a href="view-streams.html"><i class="fa fa-envelope-o"></i> <span>View Streams </span></a></li>
+
+            <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-edit"></i> <span>Public Stream</span></a>
+             <ul class="children" style="display: block;">
+                 <li class="active"><a href="create-stream.html"><i class="fa fa-caret-right"></i>Create </a></li>
+                <li><a href="publish.html"><i class="fa fa-caret-right"></i>Publish</a></li>
+                 <li><a href="subscribe.html"><i class="fa fa-caret-right"></i>Subscribe</a></li>
+             </ul>
+            </li>
+
+              <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-edit"></i> <span>Confidential Stream</span></a>
+                 <ul class="children" style="display: block;">
+                    <li class="active"><a href="generate.html"><i class="fa fa-caret-right"></i>Generate Key</a></li>
+                    <li><a href="publish-con.html"><i class="fa fa-caret-right"></i>Publish </a></li>
+                    <li><a href="view-con.html"><i class="fa fa-caret-right"></i>View File</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-laptop"></i> <span>Audit</span></a>
+             <ul class="children" style="display: block;">
+                 <li class="a"><a href="audit-by-date.html"><i class="fa fa-caret-right"></i>By date </a></li>
+                <li><a href="audit-by-txid.html"><i class="fa fa-caret-right"></i>By Txid</a></li>
+             </ul>
+            </li>
+
+               <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-laptop"></i> <span>Remote Audit</span></a>
+             <ul class="children" style="display: block;">
+                 <li class="a"><a href="remote-audit-by-date.html"><i class="fa fa-caret-right"></i>By date </a></li>
+                <li><a href="remote-audit-by-txid.html"><i class="fa fa-caret-right"></i>By Txid</a></li>
+             </ul>
+            </li>
+
+               <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-laptop"></i> <span>Retrieve</span></a>
+             <ul class="children" style="display: block;">
+                 <li class="a"><a href="retrieve-by-date.html"><i class="fa fa-caret-right"></i>By date </a></li>
+                 <li><a href="retrieve-by-stream.html"><i class="fa fa-caret-right"></i>By Stream</a></li>
+                <li><a href="retrieve-by-txid.html"><i class="fa fa-caret-right"></i>By Txid</a></li>
+             </ul>
+            </li>
+          </ul>
+
+
+
+    </div><!-- leftpanelinner -->
+  </div><!-- leftpanel -->
+  <div class="mainpanel">
+    
+    <div class="headerbar">
+      
+      <a class="menutoggle"><i class="fa fa-bars"></i></a>
+      
+      <form class="searchform" action="http://themepixels.com/demo/webpage/bracket/index.html" method="post">
+        <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
+      </form>
+
+      
+    </div><!-- headerbar -->
+        
+    <div class="pageheader">
+      <h2><i class="fa fa-table"></i> Stream Items: {{ stream_name }} <span> This shows list of all transactions in a stream..</span></h2>
+
+    </div>
+
+    
+    <div class="contentpanel">
+
+      <div class="panel panel-default">
+
+        <div class="panel-body">
+
+          <div class="table-responsive">
+          <table class="table" id="table2">
+              <thead>
+                 <tr>
+                    <th>Transacion Id</th>
+                    <th>Publisher</th>
+                    <th>Key</th>
+                    <th>Data</th>
+                 </tr>
+              </thead>
+              <tbody>
+              {% for item in items %}
+
+                 <tr class="odd gradeX">
+                    <td>{{ item['txid'] }}</td>
+                    <td>{{ item['publisher']}}</td>
+                    <td>{{ item['key'] }}</td>
+                    <td class="center"> {{ item['data'] }}</td>
+                 </tr>
+
+              {% endfor %}
+
+
+              </tbody>
+           </table>
+          </div><!-- table-responsive -->
+          
+        </div><!-- panel-body -->
+      </div><!-- panel -->
+        
+    </div><!-- contentpanel -->
+    
+  </div><!-- mainpanel -->
+
+  
+</section>
+
+
+<script src="/static/js/jquery-1.10.2.min.js"></script>
+<script src="/static/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/modernizr.min.js"></script>
+<script src="/static/js/jquery.sparkline.min.js"></script>
+<script src="/static/js/toggles.min.js"></script>
+<script src="/static/js/retina.min.js"></script>
+<script src="/static/js/jquery.cookies.js"></script>
+
+<script src="/static/js/jquery.datatables.min.js"></script>
+<script src="/static/js/chosen.jquery.min.js"></script>
+
+<script src="/static/js/custom.js"></script>
+<script>
+  jQuery(document).ready(function() {
+    
+    jQuery('#table1').dataTable();
+    
+    jQuery('#table2').dataTable({
+      "sPaginationType": "full_numbers"
+    });
+    
+    // Chosen Select
+    jQuery("select").chosen({
+      'min-width': '100px',
+      'white-space': 'nowrap',
+      disable_search_threshold: 10
+    });
+    
+    // Delete row in a table
+    jQuery('.delete-row').click(function(){
+      var c = confirm("Continue delete?");
+      if(c)
+        jQuery(this).closest('tr').fadeOut(function(){
+          jQuery(this).remove();
+        });
+        
+        return false;
+    });
+    
+    // Show aciton upon row hover
+    jQuery('.table-hidaction tbody tr').hover(function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+    },function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+    });
+  
+  
+  });
+</script>
+
+</body>
+</html>

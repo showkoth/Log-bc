@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="/static/images/favicon.png" type="image/png">
+
+  <title>Multichain</title>
+
+  <link rel="stylesheet" href="/static/css/style.default.css" />
+
+  <link rel="stylesheet" href="/static/css/bootstrap-fileupload.min.css" />
+  <link rel="stylesheet" href="/static/css/bootstrap-timepicker.min.css" />
+  <link rel="stylesheet" href="/static/css/jquery.tagsinput.css" />
+  <link rel="stylesheet" href="/static/css/colorpicker.css" />
+  <link rel="stylesheet" href="/static/css/dropzone.css" />
+
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="/static/js/html5shiv.js"></script>
+  <script src="/static/js/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+
+<body>
+
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+</div>
+
+  <div class="leftpanel">
+
+    <div class="logopanel">
+        <h1><span>[</span> Multichain Web <span>]</span></h1>
+    </div><!-- logopanel -->
+
+    <div class="leftpanelinner">
+
+
+
+      <h5 class="sidebartitle">Navigation</h5>
+          <ul class="nav nav-pills nav-stacked nav-bracket">
+            <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-home"></i> <span>Node</span></a>
+             <ul class="children" style="display: block;">
+                 <li class="active"><a href="info.html"><i class="fa fa-caret-right"></i>Info </a></li>
+                <li><a href="connect.html"><i class="fa fa-caret-right"></i>Connect</a></li>
+             </ul>
+            </li>
+
+            <li><a href="permissions.html"><i class="fa fa-envelope-o"></i> <span>Permissions </span></a></li>
+            <li><a href="view-streams.html"><i class="fa fa-envelope-o"></i> <span>View Streams </span></a></li>
+
+            <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-edit"></i> <span>Public Stream</span></a>
+             <ul class="children" style="display: block;">
+                 <li class="active"><a href="create-stream.html"><i class="fa fa-caret-right"></i>Create </a></li>
+                <li><a href="publish.html"><i class="fa fa-caret-right"></i>Publish</a></li>
+                 <li><a href="subscribe.html"><i class="fa fa-caret-right"></i>Subscribe</a></li>
+             </ul>
+            </li>
+
+              <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-edit"></i> <span>Confidential Stream</span></a>
+                 <ul class="children" style="display: block;">
+                    <li class="active"><a href="generate.html"><i class="fa fa-caret-right"></i>Generate Key</a></li>
+                    <li><a href="publish-con.html"><i class="fa fa-caret-right"></i>Publish </a></li>
+                    <li><a href="view-con.html"><i class="fa fa-caret-right"></i>View File</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-laptop"></i> <span>Audit</span></a>
+             <ul class="children" style="display: block;">
+                 <li class="a"><a href="audit-by-date.html"><i class="fa fa-caret-right"></i>By date </a></li>
+                <li><a href="audit-by-txid.html"><i class="fa fa-caret-right"></i>By Txid</a></li>
+             </ul>
+            </li>
+
+               <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-laptop"></i> <span>Remote Audit</span></a>
+             <ul class="children" style="display: block;">
+                 <li class="a"><a href="remote-audit-by-date.html"><i class="fa fa-caret-right"></i>By date </a></li>
+                <li><a href="remote-audit-by-txid.html"><i class="fa fa-caret-right"></i>By Txid</a></li>
+             </ul>
+            </li>
+
+               <li class="nav-parent nav-active active"><a href="#"><i class="fa fa-laptop"></i> <span>Retrieve</span></a>
+             <ul class="children" style="display: block;">
+                 <li class="a"><a href="retrieve-by-date.html"><i class="fa fa-caret-right"></i>By date </a></li>
+                 <li><a href="retrieve-by-stream.html"><i class="fa fa-caret-right"></i>By Stream</a></li>
+                <li><a href="retrieve-by-txid.html"><i class="fa fa-caret-right"></i>By Txid</a></li>
+             </ul>
+            </li>
+          </ul>
+
+
+
+    </div><!-- leftpanelinner -->
+  </div><!-- leftpanel -->
+
+  <div class="mainpanel">
+
+    <div class="headerbar">
+
+      <a class="menutoggle"><i class="fa fa-bars"></i></a>
+
+
+
+    </div><!-- headerbar -->
+
+    <div class="pageheader">
+      <h2><i class="fa fa-pencil"></i>Grant or Revoke Permissions</h2>
+    </div>
+
+    <div class="contentpanel">
+
+      <div class="row">
+
+        <div class="col-md-6">
+          <form id="basicForm" action = "http://localhost:5000/permissions" method="post">
+          <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="form-group">
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Admin Address <span class="asterisk">*</span></label>
+                  <div class="col-sm-9">
+                    <select id="fruits" name = "admin" class="form-control" required>
+                      {% for address in adminaddresses %}
+                        <option value= "{{address}}" SELECTED>{{address}}</option>"
+                      {% endfor %}
+
+                    </select>
+                  </div>
+                </div><!-- form-group -->
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">To Address<span class="asterisk">*</span></label>
+                  <div class="col-sm-9">
+                    <input type="text" name="toaddress" class="form-control" placeholder="Input the address..." required />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Operation<span class="asterisk">*</span></label>
+                  <div class="col-sm-9">
+                    <div class="rdio rdio-primary">
+                      <input type="radio" id="male" value="grant" name="grant" required />
+                      <label for="male">Grant</label>
+                    </div><!-- rdio -->
+                    <div class="rdio rdio-primary">
+                      <input type="radio" value="revoke" id="female" name="grant">
+                      <label for="female">Revoke</label>
+                    </div><!-- rdio -->
+                    <label class="error" for="gender"></label>
+                  </div>
+                </div><!-- form-group -->
+
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Permissions <span class="asterisk">*</span></label>
+                  <div class="col-sm-9">
+                    <div class="ckbox ckbox-primary">
+                      <input type="checkbox" id="int_website" value="connect" name="permissions" required />
+                      <label for="int_website">Connect</label>
+                    </div><!-- rdio -->
+                    <div class="ckbox ckbox-primary">
+                      <input type="checkbox" id="int_software" value="send" name="permissions" />
+                      <label for="int_software">Send</label>
+                    </div><!-- rdio -->
+                    <div class="ckbox ckbox-primary">
+                      <input type="checkbox" id="int_mobile" value="receive" name="permissions" />
+                      <label for="int_mobile">Receive</label>
+                    </div><!-- rdio -->
+
+                    <div class="ckbox ckbox-primary">
+                      <input type="checkbox" id="int_create" value="create" name="permissions" required />
+                      <label for="int_create">Create</label>
+                    </div><!-- rdio -->
+                    <div class="ckbox ckbox-primary">
+                      <input type="checkbox" id="int_mine" value="mine" name="permissions" />
+                      <label for="int_mine">Mine</label>
+                    </div><!-- rdio -->
+                    <div class="ckbox ckbox-primary">
+                      <input type="checkbox" id="int_admin" value="admin" name="permissions" />
+                      <label for="int_admin">Admin</label>
+                    </div><!-- rdio -->
+
+                  </div>
+                </div><!-- form-group -->
+
+              </div><!-- panel-body -->
+              <div class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-9 col-sm-offset-3">
+                    <button class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-default">Reset</button>
+                  </div>
+                </div>
+              </div>
+
+          </div><!-- panel -->
+          </div>
+          </form>
+        </div><!-- col-md-6 -->
+
+      <div class="col-md-6">
+          <h5 class="subtitle mb5">Current Permissions</h5>
+          <div class="table-responsive">
+          {% for address in list_addresses %}
+              <table class="table table-striped mb30">
+                    <tr>
+                        <td> <b>Address</b></t?d>
+                        <td>{{ address}}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Permissions</b></td>
+                        <td>{{dict_permissions[address]}}</td>
+                    </tr>
+
+              </table>
+
+          {% endfor %}
+
+          </div><!-- table-responsive -->
+        </div><!-- col-md-6 -->
+
+
+      </div><!--row -->
+
+
+    </div><!-- contentpanel -->
+
+  </div><!-- mainpanel -->
+
+  <div class="rightpanel">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs nav-justified">
+        <li class="active"><a href="#rp-alluser" data-toggle="tab"><i class="fa fa-users"></i></a></li>
+        <li><a href="#rp-favorites" data-toggle="tab"><i class="fa fa-heart"></i></a></li>
+        <li><a href="#rp-history" data-toggle="tab"><i class="fa fa-clock-o"></i></a></li>
+        <li><a href="#rp-settings" data-toggle="tab"><i class="fa fa-gear"></i></a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="rp-alluser">
+            <h5 class="sidebartitle">Online Users</h5>
+            <ul class="chatuserlist">
+                <li class="online">
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/userprofile.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Eileen Sideways</strong>
+                            <small>Los Angeles, CA</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+                <li class="online">
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user1.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <span class="pull-right badge badge-danger">2</span>
+                            <strong>Zaham Sindilmaca</strong>
+                            <small>San Francisco, CA</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+                <li class="online">
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user2.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Nusja Nawancali</strong>
+                            <small>Bangkok, Thailand</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+                <li class="online">
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user3.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Renov Leongal</strong>
+                            <small>Cebu City, Philippines</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+                <li class="online">
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user4.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Weno Carasbong</strong>
+                            <small>Tokyo, Japan</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+            </ul>
+
+            <div class="mb30"></div>
+
+            <h5 class="sidebartitle">Offline Users</h5>
+            <ul class="chatuserlist">
+                <li>
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user5.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Eileen Sideways</strong>
+                            <small>Los Angeles, CA</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+                <li>
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user2.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Zaham Sindilmaca</strong>
+                            <small>San Francisco, CA</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+                <li>
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user3.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Nusja Nawancali</strong>
+                            <small>Bangkok, Thailand</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+                <li>
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user4.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Renov Leongal</strong>
+                            <small>Cebu City, Philippines</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+                <li>
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user5.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Weno Carasbong</strong>
+                            <small>Tokyo, Japan</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+                <li>
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user4.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Renov Leongal</strong>
+                            <small>Cebu City, Philippines</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+                <li>
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user5.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Weno Carasbong</strong>
+                            <small>Tokyo, Japan</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+            </ul>
+        </div>
+        <div class="tab-pane" id="rp-favorites">
+            <h5 class="sidebartitle">Favorites</h5>
+            <ul class="chatuserlist">
+                <li class="online">
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user2.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Eileen Sideways</strong>
+                            <small>Los Angeles, CA</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+                <li>
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user1.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Zaham Sindilmaca</strong>
+                            <small>San Francisco, CA</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+                <li>
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user3.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Nusja Nawancali</strong>
+                            <small>Bangkok, Thailand</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+                <li class="online">
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user4.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Renov Leongal</strong>
+                            <small>Cebu City, Philippines</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+                <li class="online">
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user5.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Weno Carasbong</strong>
+                            <small>Tokyo, Japan</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+            </ul>
+        </div>
+        <div class="tab-pane" id="rp-history">
+            <h5 class="sidebartitle">History</h5>
+            <ul class="chatuserlist">
+                <li class="online">
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user4.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Eileen Sideways</strong>
+                            <small>Hi hello, ctc?... would you mind if I go to your...</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+                <li>
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user2.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Zaham Sindilmaca</strong>
+                            <small>This is to inform you that your product that we...</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+                <li>
+                    <div class="media">
+                        <a href="#" class="pull-left media-thumb">
+                            <img alt="" src="/static/images/photos/user3.png" class="media-object">
+                        </a>
+                        <div class="media-body">
+                            <strong>Nusja Nawancali</strong>
+                            <small>Are you willing to have a long term relat...</small>
+                        </div>
+                    </div><!-- media -->
+                </li>
+            </ul>
+        </div>
+        <div class="tab-pane pane-settings" id="rp-settings">
+
+            <h5 class="sidebartitle mb20">Settings</h5>
+            <div class="form-group">
+                <label class="col-xs-8 control-label">Show Offline Users</label>
+                <div class="col-xs-4 control-label">
+                    <div class="toggle toggle-success"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-8 control-label">Enable History</label>
+                <div class="col-xs-4 control-label">
+                    <div class="toggle toggle-success"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-8 control-label">Show Full Name</label>
+                <div class="col-xs-4 control-label">
+                    <div class="toggle-chat1 toggle-success"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-8 control-label">Show Location</label>
+                <div class="col-xs-4 control-label">
+                    <div class="toggle toggle-success"></div>
+                </div>
+            </div>
+
+        </div><!-- tab-pane -->
+
+    </div><!-- tab-content -->
+  </div><!-- rightpanel -->
+
+</section>
+
+
+<script src="/static/js/jquery-1.10.2.min.js"></script>
+<script src="/static/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/modernizr.min.js"></script>
+<script src="/static/js/jquery.sparkline.min.js"></script>
+<script src="/static/js/toggles.min.js"></script>
+<script src="/static/js/retina.min.js"></script>
+<script src="/static/js/jquery.cookies.js"></script>
+
+<script src="/static/js/jquery.validate.min.js"></script>
+
+<script src="/static/js/custom.js"></script>
+
+<script>
+jQuery(document).ready(function(){
+
+  // Basic Form
+  jQuery("#basicForm").validate({
+    highlight: function(element) {
+      jQuery(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+    },
+    success: function(element) {
+      jQuery(element).closest('.form-group').removeClass('has-error');
+    }
+  });
+
+  // Error Message In One Container
+  jQuery("#basicForm2").validate({
+	 errorLabelContainer: jQuery("#basicForm2 div.error")
+  });
+
+  // With Checkboxes and Radio Buttons
+  jQuery("#basicForm3").validate({
+    highlight: function(element) {
+      jQuery(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+    },
+    success: function(element) {
+      jQuery(element).closest('.form-group').removeClass('has-error');
+    }
+  });
+
+  // Validation with select boxes
+  jQuery("#basicForm4").validate({
+    highlight: function(element) {
+      jQuery(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+    },
+    success: function(element) {
+      jQuery(element).closest('.form-group').removeClass('has-error');
+    }
+  });
+
+
+});
+</script>
+
+</body>
+</html>

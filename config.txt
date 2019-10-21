@@ -1,0 +1,5 @@
+rpc-user=multichainrpc
+rpc-password=5hDWci8X5XGDJhXZVb9ZMeaxrwHYY9t4g2P6jbH9QHLG
+rpc-port=2686
+rpc-host=localhost
+chain-name=tranchain
